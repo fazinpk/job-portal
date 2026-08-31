@@ -2,8 +2,11 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+
 import { env } from "./config/env.js";
 import { authRoutes } from "./modules/auth/auth.routes.js";
+import { categoriesRoutes } from "./modules/categories/categories.routes.js";
+import { jobsRoutes } from "./modules/jobs/jobs.routes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { ApiError } from "./utils/ApiError.js";
 
@@ -19,6 +22,8 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoriesRoutes);
+app.use("/api/jobs", jobsRoutes);
 
 app.use((req, res, next) => next(new ApiError(404, "Not found")));
 app.use(errorHandler);
