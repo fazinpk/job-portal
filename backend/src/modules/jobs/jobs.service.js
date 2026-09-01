@@ -1,9 +1,13 @@
 import { prisma } from "../../lib/prisma.js";
 import { ApiError } from "../../utils/ApiError.js";
 
-export async function createJob(data, adminId) {
-  const category = await prisma.category.findUnique({ where: { id: data.categoryId } });
+async function assertCategoryExists(categoryId) {
+  const category = await prisma.category.findUnique({ where: { id: categoryId } });
   if (!category) throw new ApiError(400, "Category does not exist");
+}
+
+export async function createJob(data, adminId) {
+  await assertCategoryExists(data.categoryId);
 
   return prisma.job.create({
     data: { ...data, createdById: adminId },
@@ -39,4 +43,22 @@ export async function listJobs(query) {
   ]);
 
   return { jobs, meta: { page, limit, total, totalPages: Math.max(Math.ceil(total / limit), 1) } };
+}
+
+export async function getJobById(id) {
+  const job = await prisma.job.findUnique({ where: { id }, include: { category: true } });
+  if (!job) throw new ApiError(404, "Job not found");
+  return job;
+}
+
+export async function updateJob(id, data) {
+  await getJobById(id);
+  if (data.categoryId) await assertCategoryExists(data.categoryId);
+
+  return prisma.job.update({ where: { id }, data, include: { category: true } });
+}
+
+export async function deleteJob(id) {
+  await getJobById(id);
+  await prisma.job.delete({ where: { id } });
 }
