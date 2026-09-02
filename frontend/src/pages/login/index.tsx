@@ -1,10 +1,18 @@
 import { Navigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 import { TextField } from "@/components/ui/text-field";
 import { Button } from "@/components/ui/button";
 import { useLoginController } from "./hooks";
 
 export function LoginPage() {
-  const { form, onSubmit, isLoading, isAuthenticated } = useLoginController();
+  const {
+    form,
+    onSubmit,
+    isLoading,
+    isAuthenticated,
+    isPasswordVisible,
+    togglePasswordVisibility,
+  } = useLoginController();
   
   const {
     register,
@@ -32,13 +40,25 @@ export function LoginPage() {
         <TextField
           label="Email"
           type="email"
+          placeholder="you@company.com"
           error={errors.email?.message}
           {...register("email")}
         />
         <TextField
           label="Password"
-          type="password"
+          type={isPasswordVisible ? "text" : "password"}
+          placeholder="Enter your password"
           error={errors.password?.message}
+          endAdornment={
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              aria-label={isPasswordVisible ? "Hide password" : "Show password"}
+              className="cursor-pointer text-slate-400 hover:text-slate-600"
+            >
+              {isPasswordVisible ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          }
           {...register("password")}
         />
 
