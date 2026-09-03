@@ -108,7 +108,7 @@ export function JobListPage() {
       )}
 
       {!isLoading && !isError && (
-        <div className="flex min-h-0 grow flex-col rounded-lg border border-slate-200 bg-white">
+        <div className="flex min-h-0 grow flex-col overflow-hidden rounded-lg border border-slate-200 bg-white">
           <JobsTable
             jobs={jobs}
             onRowClick={goToDetails}
