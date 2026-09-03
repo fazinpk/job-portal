@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
 import { useGetJobsQuery, useDeleteJobMutation } from "@/features/jobs/jobsApi";
 import { useGetCategoriesQuery } from "@/features/categories/categoriesApi";
@@ -11,6 +11,7 @@ const PAGE_SIZE = 10;
 const SEARCH_DEBOUNCE_MS = 400;
 
 export function useJobListController() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { successToast, errorToast } = useToast();
 
@@ -72,6 +73,10 @@ export function useJobListController() {
     setSearchParams(next);
   };
 
+  const goToDetails = (id: number) => {
+    navigate(`/jobs/${id}`);
+  };
+
   const debouncedSetSearch = useDebouncedCallback((value: string) => {
     setFilter("search", value);
   }, SEARCH_DEBOUNCE_MS);
@@ -93,6 +98,7 @@ export function useJobListController() {
     cancelDelete,
     confirmDelete,
     isDeleting,
+    goToDetails,
     filters: { categoryId, experienceLevel },
     setFilter,
     page,
