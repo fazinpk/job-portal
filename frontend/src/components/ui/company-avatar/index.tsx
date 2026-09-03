@@ -1,7 +1,18 @@
 import { colorForCompany } from './consts'
 import type { CompanyAvatarProps } from './types'
 
-export function CompanyAvatar({ name, size = 28 }: CompanyAvatarProps) {
+export function CompanyAvatar({ name, logoUrl, size = 28 }: CompanyAvatarProps) {
+  if (logoUrl) {
+    return (
+      <img
+        src={logoUrl}
+        alt=""
+        className="inline-block shrink-0 rounded-full object-cover"
+        style={{ width: size, height: size }}
+      />
+    )
+  }
+
   const initial = name.trim().charAt(0).toUpperCase() || '?'
 
   return (

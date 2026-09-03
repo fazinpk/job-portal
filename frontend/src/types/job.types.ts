@@ -1,3 +1,5 @@
+import type { Company } from './company.types'
+
 export type ExperienceLevel = 'ENTRY' | 'MID' | 'SENIOR' | 'LEAD'
 export type EmploymentType = 'FULL_TIME' | 'PART_TIME' | 'CONTRACT' | 'INTERNSHIP'
 export type JobStatus = 'DRAFT' | 'PUBLISHED' | 'CLOSED'
@@ -10,7 +12,6 @@ export interface Category {
 export interface Job {
   id: number
   title: string
-  company: string
   description: string
   location: string
   experienceLevel: ExperienceLevel
@@ -24,13 +25,15 @@ export interface Job {
   createdAt: string
   updatedAt: string
   categoryId: number
+  companyId: number
   createdById: number
   category: Category
+  company: Company
 }
 
 export interface JobFormValues {
   title: string
-  company: string
+  companyId: number
   description: string
   location: string
   categoryId: number

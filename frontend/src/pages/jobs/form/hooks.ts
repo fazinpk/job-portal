@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useParams } from "react-router-dom";
 import type { z } from "zod";
 import { useGetCategoriesQuery } from "@/features/categories/categoriesApi";
+import { useGetCompaniesQuery } from "@/features/companies/companiesApi";
 import {
   useCreateJobMutation,
   useUpdateJobMutation,
@@ -27,6 +28,7 @@ export function useJobFormController() {
   const jobId = id ? Number(id) : 0;
 
   const { data: categories = [], isError: isCategoriesError } = useGetCategoriesQuery();
+  const { data: companies = [], isError: isCompaniesError } = useGetCompaniesQuery();
   const {
     data: job,
     isLoading: isJobLoading,
@@ -45,7 +47,7 @@ export function useJobFormController() {
     if (job) {
       form.reset({
         title: job.title,
-        company: job.company,
+        companyId: String(job.companyId),
         description: job.description,
         location: job.location,
         categoryId: String(job.categoryId),
@@ -85,5 +87,7 @@ export function useJobFormController() {
     isJobError: isEditMode && isJobError,
     categories,
     isCategoriesError,
+    companies,
+    isCompaniesError,
   };
 }

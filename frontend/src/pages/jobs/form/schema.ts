@@ -19,6 +19,11 @@ const requiredCategoryId = z
   .transform((value) => Number(value))
   .pipe(z.number().int().positive("Choose a category"));
 
+const requiredCompanyId = z
+  .string()
+  .transform((value) => Number(value))
+  .pipe(z.number().int().positive("Choose a company"));
+
 const optionalNotes = z
   .string()
   .transform((value) => {
@@ -35,7 +40,7 @@ const optionalExperienceYears = z
 export const jobFormSchema = z
   .object({
     title: z.string().trim().min(3, "Title must be at least 3 characters"),
-    company: z.string().trim().min(1, "Company is required"),
+    companyId: requiredCompanyId,
     description: z
       .string()
       .trim()
@@ -62,7 +67,7 @@ export const jobFormSchema = z
 
 export interface JobFormFieldValues {
   title: string;
-  company: string;
+  companyId: string;
   description: string;
   location: string;
   categoryId: string;
@@ -78,7 +83,7 @@ export interface JobFormFieldValues {
 
 export const EMPTY_JOB_FORM_VALUES: JobFormFieldValues = {
   title: "",
-  company: "",
+  companyId: "",
   description: "",
   location: "",
   categoryId: "",

@@ -11,7 +11,7 @@ export function JobsTable({ jobs, onRowClick, onDelete }: JobsTableProps) {
   return (
     <div className="min-h-0 grow overflow-auto">
       <table className="w-full min-w-[720px] text-left text-sm">
-        <thead className="sticky top-0 z-10 border-b border-slate-200 bg-slate-50 text-slate-500">
+        <thead className="sticky top-0 z-10 border-b border-slate-200 bg-slate-50 text-slate-900">
           <tr>
             <th className="px-4 py-3 font-medium">Title</th>
             <th className="px-4 py-3 font-medium">Company</th>
@@ -38,8 +38,8 @@ export function JobsTable({ jobs, onRowClick, onDelete }: JobsTableProps) {
               <td className="px-4 py-3 text-slate-900">{job.title}</td>
               <td className="px-4 py-3 text-slate-700">
                 <div className="flex items-center gap-2">
-                  <CompanyAvatar name={job.company} />
-                  <span>{job.company}</span>
+                  <CompanyAvatar name={job.company.name} logoUrl={job.company.logoUrl} />
+                  <span>{job.company.name}</span>
                 </div>
               </td>
               <td className="px-4 py-3 text-slate-700">{job.category.name}</td>

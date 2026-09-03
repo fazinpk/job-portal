@@ -4,6 +4,8 @@ import { DashboardPage } from '@/pages/dashboard'
 import { JobListPage } from '@/pages/jobs/list'
 import { JobFormPage } from '@/pages/jobs/form'
 import { JobDetailsPage } from '@/pages/jobs/details'
+import { CompanyListPage } from '@/pages/companies/list'
+import { CompanyFormPage } from '@/pages/companies/form'
 import { NotFoundPage } from '@/pages/not-found'
 import { ProtectedRoute } from '@/features/auth/ProtectedRoute'
 import { DashboardLayout } from '@/layouts/dashboard-layout'
@@ -21,6 +23,9 @@ const router = createBrowserRouter([
           { path: '/jobs/new', element: <JobFormPage /> },
           { path: '/jobs/:id', element: <JobDetailsPage /> },
           { path: '/jobs/:id/edit', element: <JobFormPage /> },
+          { path: '/companies', element: <CompanyListPage /> },
+          { path: '/companies/new', element: <CompanyFormPage /> },
+          { path: '/companies/:id/edit', element: <CompanyFormPage /> },
         ],
       },
     ],

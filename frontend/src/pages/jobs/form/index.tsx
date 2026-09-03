@@ -25,6 +25,8 @@ export function JobFormPage() {
     isJobError,
     categories,
     isCategoriesError,
+    companies,
+    isCompaniesError,
   } = useJobFormController();
   const {
     register,
@@ -56,13 +58,30 @@ export function JobFormPage() {
           error={errors.title?.message}
           {...register("title")}
         />
-        <TextField
-          label="Company"
-          placeholder="Enter Company Name"
-          required
-          error={errors.company?.message}
-          {...register("company")}
-        />
+        <div className="flex flex-col gap-1">
+          <Select
+            label="Company"
+            placeholder="Choose a company"
+            required
+            error={
+              isCompaniesError
+                ? "Failed to load companies"
+                : errors.companyId?.message
+            }
+            options={companies.map((company) => ({
+              label: company.name,
+              value: String(company.id),
+            }))}
+            {...register("companyId")}
+          />
+          <Link
+            to="/companies/new"
+            target="_blank"
+            className="self-start text-xs text-slate-500 hover:text-slate-700 hover:underline"
+          >
+            Don't see the company you need? Add one
+          </Link>
+        </div>
         <Textarea
           label="Description"
           placeholder="Describe the role, responsibilities, and requirements"

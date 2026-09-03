@@ -53,8 +53,8 @@ export function JobDetailsPage() {
         <div>
           <h1 className="text-xl font-semibold text-slate-900">{job.title}</h1>
           <div className="mt-1 flex items-center gap-2">
-            <CompanyAvatar name={job.company} size={22} />
-            <p className="text-sm text-slate-600">{job.company}</p>
+            <CompanyAvatar name={job.company.name} logoUrl={job.company.logoUrl} size={36} />
+            <p className="text-sm text-slate-600">{job.company.name}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
