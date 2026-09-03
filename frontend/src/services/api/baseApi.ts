@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
 import { Mutex } from 'async-mutex'
+import { toast } from 'react-toastify'
 import type { RootState } from '@/app/store'
 import { credentialsSet, credentialsCleared } from '@/features/auth/authSlice'
 import { HEALTH_URL, REFRESH_URL } from './urls.const'
@@ -27,7 +28,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   await mutex.waitForUnlock()
   let result = await rawBaseQuery(args, api, extraOptions)
 
-  if (result.error?.status === 401 && api.endpoint !== 'login') {
+  if (result.error?.status === 401 && api.endpoint !== 'login' && api.endpoint !== 'refresh') {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
       try {
@@ -38,6 +39,7 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
           result = await rawBaseQuery(args, api, extraOptions)
         } else {
           api.dispatch(credentialsCleared())
+          toast.error('Session expired. Please log in again.', { theme: 'colored' })
         }
       } finally {
         release()
