@@ -4,6 +4,13 @@ A job portal admin panel for managing job categories and postings.
 
 Admins can log in, view dashboard stats, and create/edit/delete/search/filter job postings.
 
+## Live Demo
+
+- **Frontend:** https://job-portal-plum-seven-88.vercel.app
+- **Backend API:** https://job-portal-ilj0.onrender.com/api
+
+Login with the seeded admin credentials below. Note: the backend is on Render's free tier, so a cold link may take ~30-60s to wake up on the first request.
+
 ## Tech Stack
 
 **Frontend:** React 19, Vite, TypeScript, Redux Toolkit + RTK Query, React Hook Form + Zod, Tailwind CSS, Headless UI
