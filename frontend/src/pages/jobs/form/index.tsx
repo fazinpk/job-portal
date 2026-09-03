@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import { Controller } from "react-hook-form";
 import { TextField } from "@/components/ui/text-field";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { Button } from "@/components/ui/button";
 import { LoadingView } from "@/components/views/loading";
 import { ErrorView } from "@/components/views/error";
@@ -25,6 +28,7 @@ export function JobFormPage() {
   } = useJobFormController();
   const {
     register,
+    control,
     formState: { errors },
   } = form;
 
@@ -51,6 +55,13 @@ export function JobFormPage() {
           required
           error={errors.title?.message}
           {...register("title")}
+        />
+        <TextField
+          label="Company"
+          placeholder="Enter Company Name"
+          required
+          error={errors.company?.message}
+          {...register("company")}
         />
         <Textarea
           label="Description"
@@ -100,11 +111,19 @@ export function JobFormPage() {
           />
         </div>
 
+        <TextField
+          label="Years of experience"
+          placeholder="e.g. 2-4 years, Fresher, 5+"
+          error={errors.experienceYears?.message}
+          {...register("experienceYears")}
+        />
+
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TextField
             label="Minimum salary"
             type="number"
             placeholder="e.g. 15000"
+            startAdornment="₹"
             error={errors.salaryMin?.message}
             {...register("salaryMin")}
           />
@@ -112,10 +131,28 @@ export function JobFormPage() {
             label="Maximum salary"
             type="number"
             placeholder="e.g. 25000"
+            startAdornment="₹"
             error={errors.salaryMax?.message}
             {...register("salaryMax")}
           />
         </div>
+
+        <Controller
+          name="notes"
+          control={control}
+          render={({ field }) => (
+            <RichTextEditor
+              label="Additional notes"
+              value={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
+
+        <Checkbox
+          label="Immediate joiner required"
+          {...register("isImmediateJoiner")}
+        />
 
         <Select
           label="Status"

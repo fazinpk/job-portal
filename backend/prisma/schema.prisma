@@ -61,12 +61,16 @@ enum JobStatus {
 model Job {
   id              Int             @id @default(autoincrement())
   title           String
+  company         String          @default("")
   description     String
   location        String
   experienceLevel ExperienceLevel
+  experienceYears String?
   employmentType  EmploymentType
   salaryMin       Int?
   salaryMax       Int?
+  notes           String?
+  isImmediateJoiner Boolean       @default(false)
   status          JobStatus       @default(DRAFT)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt

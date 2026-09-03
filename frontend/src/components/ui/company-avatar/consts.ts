@@ -1,0 +1,13 @@
+export const COMPANY_AVATAR_COLORS = [
+  'bg-blue-100 text-blue-700',
+  'bg-emerald-100 text-emerald-700',
+  'bg-amber-100 text-amber-700',
+  'bg-rose-100 text-rose-700',
+  'bg-violet-100 text-violet-700',
+  'bg-cyan-100 text-cyan-700',
+]
+
+export function colorForCompany(name: string) {
+  const index = name.trim().charCodeAt(0) || 0
+  return COMPANY_AVATAR_COLORS[index % COMPANY_AVATAR_COLORS.length]
+}

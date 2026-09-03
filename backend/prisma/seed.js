@@ -9,8 +9,10 @@ const CATEGORY_NAMES = ["Engineering", "Design", "Product", "Marketing", "Sales"
 const SAMPLE_JOBS = [
   {
     title: "Backend Engineer",
+    company: "Nimbus Systems",
     category: "Engineering",
     experienceLevel: "MID",
+    experienceYears: "3-5 years",
     employmentType: "FULL_TIME",
     status: "PUBLISHED",
     salaryMin: 50000,
@@ -20,8 +22,10 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Frontend Engineer",
+    company: "Brightloop Technologies",
     category: "Engineering",
     experienceLevel: "MID",
+    experienceYears: "2-4 years",
     employmentType: "FULL_TIME",
     status: "PUBLISHED",
     salaryMin: 45000,
@@ -31,17 +35,22 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Senior Backend Engineer",
+    company: "Corestack Inc.",
     category: "Engineering",
     experienceLevel: "SENIOR",
+    experienceYears: "6+ years",
     employmentType: "FULL_TIME",
     status: "PUBLISHED",
     salaryMin: 90000,
     salaryMax: 130000,
     description:
       "Lead the design of our core services, mentor junior engineers, and help shape our approach to reliability and performance as we scale beyond our current user base.",
+    notes: "<p><strong>Immediate joiner preferred.</strong> We're hoping to onboard someone within 2-3 weeks.</p><ul><li>Notice period buyout considered for the right candidate</li><li>Hybrid — 2 days/week in office</li></ul>",
+    isImmediateJoiner: true,
   },
   {
     title: "DevOps Engineer",
+    company: "Ironclad Robotics",
     category: "Engineering",
     experienceLevel: "SENIOR",
     employmentType: "FULL_TIME",
@@ -53,8 +62,10 @@ const SAMPLE_JOBS = [
   },
   {
     title: "QA Engineer Intern",
+    company: "Nimbus Systems",
     category: "Engineering",
     experienceLevel: "ENTRY",
+    experienceYears: "Fresher",
     employmentType: "INTERNSHIP",
     status: "PUBLISHED",
     salaryMin: 15000,
@@ -64,6 +75,7 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Product Designer",
+    company: "Palette Studio",
     category: "Design",
     experienceLevel: "MID",
     employmentType: "FULL_TIME",
@@ -75,6 +87,7 @@ const SAMPLE_JOBS = [
   },
   {
     title: "UX Researcher",
+    company: "Palette Studio",
     category: "Design",
     experienceLevel: "ENTRY",
     employmentType: "FULL_TIME",
@@ -86,8 +99,10 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Product Manager",
+    company: "Northbridge Labs",
     category: "Product",
     experienceLevel: "SENIOR",
+    experienceYears: "7+ years",
     employmentType: "FULL_TIME",
     status: "PUBLISHED",
     salaryMin: 100000,
@@ -97,6 +112,7 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Associate Product Manager",
+    company: "Northbridge Labs",
     category: "Product",
     experienceLevel: "ENTRY",
     employmentType: "FULL_TIME",
@@ -108,6 +124,7 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Content Marketing Lead",
+    company: "Beacon Media Co.",
     category: "Marketing",
     experienceLevel: "LEAD",
     employmentType: "FULL_TIME",
@@ -119,8 +136,10 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Marketing Intern",
+    company: "Beacon Media Co.",
     category: "Marketing",
     experienceLevel: "ENTRY",
+    experienceYears: "Fresher",
     employmentType: "INTERNSHIP",
     status: "PUBLISHED",
     salaryMin: 10000,
@@ -130,6 +149,7 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Sales Executive",
+    company: "Anchor Sales Group",
     category: "Sales",
     experienceLevel: "MID",
     employmentType: "FULL_TIME",
@@ -141,6 +161,7 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Enterprise Sales Lead",
+    company: "Vertex Analytics",
     category: "Sales",
     experienceLevel: "LEAD",
     employmentType: "FULL_TIME",
@@ -152,6 +173,7 @@ const SAMPLE_JOBS = [
   },
   {
     title: "Customer Support Associate",
+    company: "Everline Support Co.",
     category: "Customer Support",
     experienceLevel: "ENTRY",
     employmentType: "PART_TIME",
@@ -160,9 +182,11 @@ const SAMPLE_JOBS = [
     salaryMax: 25000,
     description:
       "Be the first point of contact for our customers, resolving issues over chat and email and knowing when to escalate the tricky ones to engineering.",
+    isImmediateJoiner: true,
   },
   {
     title: "Support Team Lead",
+    company: "Everline Support Co.",
     category: "Customer Support",
     experienceLevel: "LEAD",
     employmentType: "FULL_TIME",
@@ -199,14 +223,18 @@ async function main() {
       await prisma.job.create({
         data: {
           title: job.title,
+          company: job.company,
           description: job.description,
           location: "Kochi, India",
           categoryId: categoryIdByName[job.category],
           experienceLevel: job.experienceLevel,
+          experienceYears: job.experienceYears,
           employmentType: job.employmentType,
           status: job.status,
           salaryMin: job.salaryMin,
           salaryMax: job.salaryMax,
+          notes: job.notes,
+          isImmediateJoiner: job.isImmediateJoiner ?? false,
           createdById: admin.id,
         },
       });

@@ -6,13 +6,17 @@ export const jobStatuses = ["DRAFT", "PUBLISHED", "CLOSED"];
 
 const jobFieldsSchema = z.object({
   title: z.string().trim().min(3, "Title must be at least 3 characters"),
+  company: z.string().trim().min(1, "Company is required"),
   description: z.string().trim().min(20, "Description must be at least 20 characters"),
   location: z.string().trim().min(2, "Location is required"),
   categoryId: z.coerce.number().int().positive("Choose a category"),
   experienceLevel: z.enum(experienceLevels),
+  experienceYears: z.string().trim().max(50).optional(),
   employmentType: z.enum(employmentTypes),
   salaryMin: z.coerce.number().int().nonnegative().optional(),
   salaryMax: z.coerce.number().int().nonnegative().optional(),
+  notes: z.string().trim().max(5000).optional(),
+  isImmediateJoiner: z.boolean().optional(),
   status: z.enum(jobStatuses).optional(),
 });
 

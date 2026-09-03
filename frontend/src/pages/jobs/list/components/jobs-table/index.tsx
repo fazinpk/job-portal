@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Pencil, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { CompanyAvatar } from "@/components/ui/company-avatar";
 import { IconButton } from "@/components/ui/icon-button";
 import { iconButtonVariants } from "@/components/ui/icon-button/consts";
 import { JOB_STATUS_THEME } from "@/features/jobs/job.constants";
@@ -13,6 +14,7 @@ export function JobsTable({ jobs, onRowClick, onDelete }: JobsTableProps) {
         <thead className="sticky top-0 z-10 border-b border-slate-200 bg-slate-50 text-slate-500">
           <tr>
             <th className="px-4 py-3 font-medium">Title</th>
+            <th className="px-4 py-3 font-medium">Company</th>
             <th className="px-4 py-3 font-medium">Category</th>
             <th className="px-4 py-3 font-medium">Experience</th>
             <th className="px-4 py-3 font-medium">Status</th>
@@ -22,7 +24,7 @@ export function JobsTable({ jobs, onRowClick, onDelete }: JobsTableProps) {
         <tbody>
           {jobs.length === 0 && (
             <tr>
-              <td colSpan={5} className="px-4 py-6 text-center text-slate-500">
+              <td colSpan={6} className="px-4 py-6 text-center text-slate-500">
                 No jobs found.
               </td>
             </tr>
@@ -34,6 +36,12 @@ export function JobsTable({ jobs, onRowClick, onDelete }: JobsTableProps) {
               className="cursor-pointer border-b border-slate-100 transition-colors last:border-0 hover:bg-slate-50"
             >
               <td className="px-4 py-3 text-slate-900">{job.title}</td>
+              <td className="px-4 py-3 text-slate-700">
+                <div className="flex items-center gap-2">
+                  <CompanyAvatar name={job.company} />
+                  <span>{job.company}</span>
+                </div>
+              </td>
               <td className="px-4 py-3 text-slate-700">{job.category.name}</td>
               <td className="px-4 py-3 text-slate-700">
                 {job.experienceLevel}

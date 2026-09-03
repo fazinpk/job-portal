@@ -26,6 +26,7 @@ export async function listJobs(query) {
     ...(search && {
       OR: [
         { title: { contains: search, mode: "insensitive" } },
+        { company: { contains: search, mode: "insensitive" } },
         { description: { contains: search, mode: "insensitive" } },
       ],
     }),

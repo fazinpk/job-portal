@@ -45,13 +45,17 @@ export function useJobFormController() {
     if (job) {
       form.reset({
         title: job.title,
+        company: job.company,
         description: job.description,
         location: job.location,
         categoryId: String(job.categoryId),
         experienceLevel: job.experienceLevel,
+        experienceYears: job.experienceYears ?? "",
         employmentType: job.employmentType,
         salaryMin: job.salaryMin != null ? String(job.salaryMin) : "",
         salaryMax: job.salaryMax != null ? String(job.salaryMax) : "",
+        notes: job.notes ?? "",
+        isImmediateJoiner: job.isImmediateJoiner,
         status: job.status,
       });
     }
