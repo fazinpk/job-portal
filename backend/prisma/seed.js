@@ -6,6 +6,10 @@ const prisma = new PrismaClient();
 
 const CATEGORY_NAMES = ["Engineering", "Design", "Product", "Marketing", "Sales", "Customer Support"];
 
+function placeholderLogoUrl(companyName) {
+  return `https://api.dicebear.com/9.x/shapes/svg?seed=${encodeURIComponent(companyName)}`;
+}
+
 const SAMPLE_JOBS = [
   {
     title: "Backend Engineer",
@@ -215,6 +219,17 @@ async function main() {
   const categories = await prisma.category.findMany();
   const categoryIdByName = Object.fromEntries(categories.map((c) => [c.name, c.id]));
 
+  const companyNames = [...new Set(SAMPLE_JOBS.map((job) => job.company))];
+  for (const name of companyNames) {
+    await prisma.company.upsert({
+      where: { name },
+      update: {},
+      create: { name, logoUrl: placeholderLogoUrl(name) },
+    });
+  }
+  const companies = await prisma.company.findMany();
+  const companyIdByName = Object.fromEntries(companies.map((c) => [c.name, c.id]));
+
   const existingJobCount = await prisma.job.count();
   if (existingJobCount > 0) {
     console.log(`Skipping sample jobs — ${existingJobCount} job(s) already exist.`);
@@ -223,7 +238,7 @@ async function main() {
       await prisma.job.create({
         data: {
           title: job.title,
-          company: job.company,
+          companyId: companyIdByName[job.company],
           description: job.description,
           location: "Kochi, India",
           categoryId: categoryIdByName[job.category],

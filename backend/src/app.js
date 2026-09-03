@@ -7,6 +7,7 @@ import helmet from "helmet";
 import { env } from "./config/env.js";
 import { authRoutes } from "./modules/auth/auth.routes.js";
 import { categoriesRoutes } from "./modules/categories/categories.routes.js";
+import { companiesRoutes } from "./modules/companies/companies.routes.js";
 import { jobsRoutes } from "./modules/jobs/jobs.routes.js";
 import { dashboardRoutes } from "./modules/dashboard/dashboard.routes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
@@ -31,6 +32,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoriesRoutes);
+app.use("/api/companies", companiesRoutes);
 app.use("/api/jobs", jobsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 

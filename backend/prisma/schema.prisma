@@ -38,6 +38,16 @@ model Category {
   jobs Job[]
 }
 
+model Company {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  logoUrl   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jobs Job[]
+}
+
 enum ExperienceLevel {
   ENTRY
   MID
@@ -61,7 +71,6 @@ enum JobStatus {
 model Job {
   id              Int             @id @default(autoincrement())
   title           String
-  company         String          @default("")
   description     String
   location        String
   experienceLevel ExperienceLevel
@@ -78,10 +87,14 @@ model Job {
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id])
 
+  companyId Int
+  company   Company @relation(fields: [companyId], references: [id])
+
   createdById Int
   createdBy   Admin @relation(fields: [createdById], references: [id])
 
   @@index([categoryId])
+  @@index([companyId])
   @@index([experienceLevel])
   @@index([status])
 }

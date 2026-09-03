@@ -6,7 +6,7 @@ export const jobStatuses = ["DRAFT", "PUBLISHED", "CLOSED"];
 
 const jobFieldsSchema = z.object({
   title: z.string().trim().min(3, "Title must be at least 3 characters"),
-  company: z.string().trim().min(1, "Company is required"),
+  companyId: z.coerce.number().int().positive("Choose a company"),
   description: z.string().trim().min(20, "Description must be at least 20 characters"),
   location: z.string().trim().min(2, "Location is required"),
   categoryId: z.coerce.number().int().positive("Choose a category"),
