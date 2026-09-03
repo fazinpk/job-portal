@@ -37,10 +37,6 @@ export function JobFormPage() {
 
   return (
     <div className="flex max-w-2xl flex-col gap-6">
-      <h1 className="text-xl font-semibold text-slate-900">
-        {isEditMode ? "Edit Job" : "Create Job"}
-      </h1>
-
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         {errors.root && (
           <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
@@ -82,7 +78,7 @@ export function JobFormPage() {
           {...register("categoryId")}
         />
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Select
             label="Experience level"
             required
@@ -99,7 +95,7 @@ export function JobFormPage() {
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TextField
             label="Minimum salary"
             type="number"

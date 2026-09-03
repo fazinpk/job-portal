@@ -16,8 +16,6 @@ export function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-xl font-semibold text-slate-900">Dashboard</h1>
-
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         <StatCard label="Total Jobs" value={stats.totalJobs} />
         <StatCard label="Published" value={stats.byStatus.PUBLISHED} />
