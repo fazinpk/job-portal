@@ -179,7 +179,7 @@ async function main() {
     where: { email: "admin@jobportal.com" },
     update: {},
     create: {
-      name: "Fazin",
+      name: "Super Admin",
       email: "admin@jobportal.com",
       password: await bcrypt.hash("Admin@1234", 10),
     },

@@ -27,33 +27,56 @@ export async function login(email, password) {
   const refreshToken = generateRefreshToken();
 
   await prisma.refreshToken.create({
-    data: { tokenHash: hashToken(refreshToken), adminId: admin.id, expiresAt: refreshExpiry() },
+    data: {
+      tokenHash: hashToken(refreshToken),
+      adminId: admin.id,
+      expiresAt: refreshExpiry(),
+    },
   });
 
-  return { accessToken, refreshToken, admin: { id: admin.id, name: admin.name, email: admin.email } };
+  return {
+    accessToken,
+    refreshToken,
+    admin: { id: admin.id, name: admin.name, email: admin.email },
+  };
 }
 
 export async function refresh(oldToken) {
   if (!oldToken) throw new ApiError(401, "Missing refresh token");
 
-  const record = await prisma.refreshToken.findUnique({ where: { tokenHash: hashToken(oldToken) } });
+  const record = await prisma.refreshToken.findUnique({
+    where: { tokenHash: hashToken(oldToken) },
+  });
   if (!record || record.revokedAt || record.expiresAt < new Date()) {
     throw new ApiError(401, "Invalid or expired refresh token");
   }
 
-  const admin = await prisma.admin.findUnique({ where: { id: record.adminId } });
+  const admin = await prisma.admin.findUnique({
+    where: { id: record.adminId },
+  });
   if (!admin) throw new ApiError(401, "Invalid refresh token");
 
   const newRefreshToken = generateRefreshToken();
 
   await prisma.$transaction([
-    prisma.refreshToken.update({ where: { id: record.id }, data: { revokedAt: new Date() } }),
+    prisma.refreshToken.update({
+      where: { id: record.id },
+      data: { revokedAt: new Date() },
+    }),
     prisma.refreshToken.create({
-      data: { tokenHash: hashToken(newRefreshToken), adminId: admin.id, expiresAt: refreshExpiry() },
+      data: {
+        tokenHash: hashToken(newRefreshToken),
+        adminId: admin.id,
+        expiresAt: refreshExpiry(),
+      },
     }),
   ]);
 
-  return { accessToken: signAccessToken(admin), refreshToken: newRefreshToken };
+  return {
+    accessToken: signAccessToken(admin),
+    refreshToken: newRefreshToken,
+    admin: { id: admin.id, name: admin.name, email: admin.email },
+  };
 }
 
 export async function logout(token) {

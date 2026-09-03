@@ -22,10 +22,10 @@ export async function login(req, res) {
 }
 
 export async function refresh(req, res) {
-  const { accessToken, refreshToken } = await authService.refresh(req.cookies[REFRESH_COOKIE]);
+  const { accessToken, refreshToken, admin } = await authService.refresh(req.cookies[REFRESH_COOKIE]);
 
   res.cookie(REFRESH_COOKIE, refreshToken, refreshCookieOptions());
-  res.json({ success: true, message: "Token refreshed", data: { accessToken } });
+  res.json({ success: true, message: "Token refreshed", data: { accessToken, admin } });
 }
 
 export async function logout(req, res) {
