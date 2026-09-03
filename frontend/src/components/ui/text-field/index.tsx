@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import type { TextFieldProps } from './types'
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  ({ label, error, id, name, required, endAdornment, ...props }, ref) => {
+  ({ label, error, id, name, required, startAdornment, endAdornment, ...props }, ref) => {
     const inputId = id ?? name
 
     return (
@@ -12,13 +12,16 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           {required && <span className="text-red-500"> *</span>}
         </label>
         <div className="relative">
+          {startAdornment && (
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">{startAdornment}</div>
+          )}
           <input
             id={inputId}
             name={name}
             ref={ref}
             className={`w-full rounded-md border bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-400 ${
-              endAdornment ? 'pr-10' : ''
-            } ${error ? 'border-red-500' : 'border-slate-300'}`}
+              startAdornment ? 'pl-9' : ''
+            } ${endAdornment ? 'pr-10' : ''} ${error ? 'border-red-500' : 'border-slate-300'}`}
             {...props}
           />
           {endAdornment && (
