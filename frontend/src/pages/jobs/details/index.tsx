@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom'
-import { Pencil, Trash2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { ConfirmDialog } from '@/components/ui/confirm-dialog'
-import { LoadingView } from '@/components/views/loading'
-import { ErrorView } from '@/components/views/error'
-import { JOB_STATUS_THEME } from '@/features/jobs/job.constants'
-import { useJobDetailsController } from './hooks'
+import { Link } from "react-router-dom";
+import { Pencil, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { LoadingView } from "@/components/views/loading";
+import { ErrorView } from "@/components/views/error";
+import { JOB_STATUS_THEME } from "@/features/jobs/job.constants";
+import { useJobDetailsController } from "./hooks";
 
 function DetailField({ label, value }: { label: string; value: string }) {
   return (
@@ -14,7 +14,7 @@ function DetailField({ label, value }: { label: string; value: string }) {
       <p className="text-sm font-medium text-slate-700">{label}</p>
       <p className="mt-1 text-sm text-slate-600">{value}</p>
     </div>
-  )
+  );
 }
 
 export function JobDetailsPage() {
@@ -27,23 +27,23 @@ export function JobDetailsPage() {
     requestDelete,
     cancelDelete,
     confirmDelete,
-  } = useJobDetailsController()
+  } = useJobDetailsController();
 
   if (isLoading) {
-    return <LoadingView message="Loading job..." />
+    return <LoadingView message="Loading job..." />;
   }
 
   if (isError || !job) {
-    return <ErrorView message="Failed to load this job." />
+    return <ErrorView message="Failed to load this job." />;
   }
 
   const salaryRange =
     job.salaryMin != null || job.salaryMax != null
-      ? `${job.salaryMin ?? '—'} - ${job.salaryMax ?? '—'}`
-      : 'Not specified'
+      ? `${job.salaryMin ?? "—"} - ${job.salaryMax ?? "—"}`
+      : "Not specified";
 
   return (
-    <div className="flex max-w-2xl flex-col gap-6">
+    <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-xl font-semibold text-slate-900">{job.title}</h1>
         <div className="flex items-center gap-2">
@@ -74,7 +74,9 @@ export function JobDetailsPage() {
 
       <div>
         <p className="text-sm font-medium text-slate-700">Description</p>
-        <p className="mt-1 whitespace-pre-line text-sm text-slate-600">{job.description}</p>
+        <p className="mt-1 whitespace-pre-line text-sm text-slate-600">
+          {job.description}
+        </p>
       </div>
 
       <ConfirmDialog
@@ -88,5 +90,5 @@ export function JobDetailsPage() {
         onCancel={cancelDelete}
       />
     </div>
-  )
+  );
 }

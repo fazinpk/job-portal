@@ -37,7 +37,7 @@ export function JobFormPage() {
   }
 
   return (
-    <div className="flex max-w-2xl flex-col gap-6">
+    <div className="flex flex-col gap-6">
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         {errors.root && (
           <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
@@ -71,7 +71,11 @@ export function JobFormPage() {
           label="Category"
           placeholder="Choose a category"
           required
-          error={isCategoriesError ? "Failed to load categories" : errors.categoryId?.message}
+          error={
+            isCategoriesError
+              ? "Failed to load categories"
+              : errors.categoryId?.message
+          }
           options={categories.map((category) => ({
             label: category.name,
             value: String(category.id),

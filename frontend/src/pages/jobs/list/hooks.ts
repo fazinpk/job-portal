@@ -5,7 +5,7 @@ import { useGetJobsQuery, useDeleteJobMutation } from "@/features/jobs/jobsApi";
 import { useGetCategoriesQuery } from "@/features/categories/categoriesApi";
 import { useToast } from "@/components/ui/toast";
 import { getErrorMessage } from "@/utils/getErrorMessage";
-import type { ExperienceLevel } from "@/types/job.types";
+import type { ExperienceLevel, JobStatus } from "@/types/job.types";
 
 const PAGE_SIZE = 10;
 const SEARCH_DEBOUNCE_MS = 400;
@@ -22,6 +22,7 @@ export function useJobListController() {
   const experienceLevel =
     (searchParams.get("experienceLevel") as ExperienceLevel | null) ??
     undefined;
+  const status = (searchParams.get("status") as JobStatus | null) ?? undefined;
   const search = searchParams.get("search") ?? undefined;
 
   const [searchInput, setSearchInput] = useState(search ?? "");
@@ -31,12 +32,17 @@ export function useJobListController() {
     limit: PAGE_SIZE,
     categoryId,
     experienceLevel,
+    status,
     search,
   });
-  const { data: categories, isError: isCategoriesError } = useGetCategoriesQuery();
+  const { data: categories, isError: isCategoriesError } =
+    useGetCategoriesQuery();
   const [deleteJob, { isLoading: isDeleting }] = useDeleteJobMutation();
 
-  const [pendingDelete, setPendingDelete] = useState<{ id: number; title: string } | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<{
+    id: number;
+    title: string;
+  } | null>(null);
 
   const requestDelete = (id: number, title: string) => {
     setPendingDelete({ id, title });
@@ -73,6 +79,15 @@ export function useJobListController() {
     setSearchParams(next);
   };
 
+  const hasActiveFilters = Boolean(
+    categoryId || experienceLevel || status || search,
+  );
+
+  const clearFilters = () => {
+    setSearchInput("");
+    setSearchParams(new URLSearchParams());
+  };
+
   const goToDetails = (id: number) => {
     navigate(`/jobs/${id}`);
   };
@@ -100,8 +115,10 @@ export function useJobListController() {
     confirmDelete,
     isDeleting,
     goToDetails,
-    filters: { categoryId, experienceLevel },
+    filters: { categoryId, experienceLevel, status },
     setFilter,
+    hasActiveFilters,
+    clearFilters,
     page,
     setPage,
     searchInput,
