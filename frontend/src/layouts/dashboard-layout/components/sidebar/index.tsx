@@ -23,7 +23,10 @@ export function Sidebar({ isMobileOpen, onClose }: SidebarProps) {
         }`}
       >
         <div className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 px-6">
-          <span className="text-lg font-semibold text-slate-900">Job Portal</span>
+          <div className="flex items-center gap-2">
+            <img src="/favicon.png" alt="" className="h-7 w-7" />
+            <span className="text-lg font-semibold text-slate-900">Job Portal</span>
+          </div>
           <IconButton icon={X} label="Close menu" onClick={onClose} className="md:hidden" />
         </div>
         <nav className="flex flex-col gap-1 overflow-y-auto p-3">
