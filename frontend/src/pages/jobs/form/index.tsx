@@ -120,7 +120,7 @@ export function JobFormPage() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TextField
-            label="Minimum salary"
+            label="Minimum salary (per month)"
             type="number"
             placeholder="e.g. 15000"
             startAdornment="₹"
@@ -128,7 +128,7 @@ export function JobFormPage() {
             {...register("salaryMin")}
           />
           <TextField
-            label="Maximum salary"
+            label="Maximum salary (per month)"
             type="number"
             placeholder="e.g. 25000"
             startAdornment="₹"

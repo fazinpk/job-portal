@@ -86,7 +86,7 @@ export function JobDetailsPage() {
           <DetailField label="Years of experience" value={job.experienceYears} />
         )}
         <DetailField label="Employment type" value={job.employmentType} />
-        <DetailField label="Salary range" value={salaryRange} />
+        <DetailField label="Salary range (per month)" value={salaryRange} />
       </div>
 
       <div>
