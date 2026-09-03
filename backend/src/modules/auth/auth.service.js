@@ -41,13 +41,22 @@ export async function login(email, password) {
   };
 }
 
+const ROTATION_GRACE_MS = 5000;
+
 export async function refresh(oldToken) {
   if (!oldToken) throw new ApiError(401, "Missing refresh token");
 
   const record = await prisma.refreshToken.findUnique({
     where: { tokenHash: hashToken(oldToken) },
   });
-  if (!record || record.revokedAt || record.expiresAt < new Date()) {
+  if (!record || record.expiresAt < new Date()) {
+    throw new ApiError(401, "Invalid or expired refresh token");
+  }
+
+  const revokedJustNow =
+    record.revokedAt &&
+    Date.now() - record.revokedAt.getTime() < ROTATION_GRACE_MS;
+  if (record.revokedAt && !revokedJustNow) {
     throw new ApiError(401, "Invalid or expired refresh token");
   }
 
@@ -59,8 +68,8 @@ export async function refresh(oldToken) {
   const newRefreshToken = generateRefreshToken();
 
   await prisma.$transaction([
-    prisma.refreshToken.update({
-      where: { id: record.id },
+    prisma.refreshToken.updateMany({
+      where: { tokenHash: hashToken(oldToken), revokedAt: null },
       data: { revokedAt: new Date() },
     }),
     prisma.refreshToken.create({

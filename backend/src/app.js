@@ -22,7 +22,11 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.get("/api/health", (req, res) => {
-  res.json({ success: true, message: "API is up", data: { time: new Date().toISOString() } });
+  res.json({
+    success: true,
+    message: "API is up",
+    data: { time: new Date().toISOString() },
+  });
 });
 
 app.use("/api/auth", authRoutes);
