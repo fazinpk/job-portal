@@ -9,5 +9,9 @@ export function useToast() {
     toast.error(message, { theme: 'colored' })
   }
 
-  return { successToast, errorToast }
+  const infoToast = (message: string) => {
+    toast.info(message, { theme: 'colored' })
+  }
+
+  return { successToast, errorToast, infoToast }
 }

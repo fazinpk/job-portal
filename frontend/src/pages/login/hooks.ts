@@ -11,13 +11,17 @@ import { loginSchema, type LoginFormValues } from './schema'
 export function useLoginController() {
   const navigate = useNavigate()
   const { status } = useAuth()
-  const { successToast } = useToast()
+  const { successToast, infoToast } = useToast()
   const [login, { isLoading }] = useLoginMutation()
   const form = useForm<LoginFormValues>({ resolver: zodResolver(loginSchema) })
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((visible) => !visible)
+  }
+
+  const handleForgotPassword = () => {
+    infoToast('Contact your system administrator to reset your password.')
   }
 
   const onSubmit = form.handleSubmit(async (values) => {
@@ -37,5 +41,6 @@ export function useLoginController() {
     isAuthenticated: status === 'authenticated',
     isPasswordVisible,
     togglePasswordVisibility,
+    handleForgotPassword,
   }
 }

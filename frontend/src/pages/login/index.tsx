@@ -12,6 +12,7 @@ export function LoginPage() {
     isAuthenticated,
     isPasswordVisible,
     togglePasswordVisibility,
+    handleForgotPassword,
   } = useLoginController();
   
   const {
@@ -61,6 +62,14 @@ export function LoginPage() {
           }
           {...register("password")}
         />
+
+        <button
+          type="button"
+          onClick={handleForgotPassword}
+          className="cursor-pointer self-end text-sm text-slate-600 hover:text-slate-900 hover:underline"
+        >
+          Forgot password?
+        </button>
 
         <Button type="submit" theme="primary" disabled={isLoading}>
           {isLoading ? "Logging in..." : "Log in"}
