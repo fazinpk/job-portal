@@ -21,6 +21,7 @@ export function JobFormPage() {
     isLoadingJob,
     isJobError,
     categories,
+    isCategoriesError,
   } = useJobFormController();
   const {
     register,
@@ -70,7 +71,7 @@ export function JobFormPage() {
           label="Category"
           placeholder="Choose a category"
           required
-          error={errors.categoryId?.message}
+          error={isCategoriesError ? "Failed to load categories" : errors.categoryId?.message}
           options={categories.map((category) => ({
             label: category.name,
             value: String(category.id),

@@ -4,6 +4,7 @@ import type { TextareaProps } from './types'
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ label, error, id, name, required, ...props }, ref) => {
     const textareaId = id ?? name
+    const errorId = error ? `${textareaId}-error` : undefined
 
     return (
       <div className="flex flex-col gap-1">
@@ -16,12 +17,18 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           name={name}
           ref={ref}
           rows={4}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
           className={`rounded-md border bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-400 ${
             error ? 'border-red-500' : 'border-slate-300'
           }`}
           {...props}
         />
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && (
+          <p id={errorId} className="text-sm text-red-600">
+            {error}
+          </p>
+        )}
       </div>
     )
   },

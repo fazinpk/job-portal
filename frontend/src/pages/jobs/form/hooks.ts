@@ -26,7 +26,7 @@ export function useJobFormController() {
   const isEditMode = Boolean(id);
   const jobId = id ? Number(id) : 0;
 
-  const { data: categories = [] } = useGetCategoriesQuery();
+  const { data: categories = [], isError: isCategoriesError } = useGetCategoriesQuery();
   const {
     data: job,
     isLoading: isJobLoading,
@@ -80,5 +80,6 @@ export function useJobFormController() {
     isLoadingJob: isEditMode && isJobLoading,
     isJobError: isEditMode && isJobError,
     categories,
+    isCategoriesError,
   };
 }

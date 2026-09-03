@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { LoadingView } from "@/components/views/loading";
 import { useAuth } from "./hooks";
 
 export function ProtectedRoute() {
@@ -6,8 +7,8 @@ export function ProtectedRoute() {
 
   if (status === "checking") {
     return (
-      <div className="flex min-h-screen items-center justify-center text-slate-500">
-        Loading...
+      <div className="flex min-h-screen items-center justify-center">
+        <LoadingView />
       </div>
     );
   }

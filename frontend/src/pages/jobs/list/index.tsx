@@ -16,6 +16,7 @@ export function JobListPage() {
     jobs,
     meta,
     categories,
+    isCategoriesError,
     isLoading,
     isError,
     refetch,
@@ -63,6 +64,7 @@ export function JobListPage() {
           placeholder="All categories"
           value={filters.categoryId ? String(filters.categoryId) : ""}
           onChange={(event) => setFilter("categoryId", event.target.value)}
+          error={isCategoriesError ? "Failed to load categories" : undefined}
           options={categories.map((category) => ({
             label: category.name,
             value: String(category.id),

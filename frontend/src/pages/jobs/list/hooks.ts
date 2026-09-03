@@ -33,7 +33,7 @@ export function useJobListController() {
     experienceLevel,
     search,
   });
-  const { data: categories } = useGetCategoriesQuery();
+  const { data: categories, isError: isCategoriesError } = useGetCategoriesQuery();
   const [deleteJob, { isLoading: isDeleting }] = useDeleteJobMutation();
 
   const [pendingDelete, setPendingDelete] = useState<{ id: number; title: string } | null>(null);
@@ -90,6 +90,7 @@ export function useJobListController() {
     jobs: data?.jobs ?? [],
     meta: data?.meta,
     categories: categories ?? [],
+    isCategoriesError,
     isLoading,
     isError,
     refetch,

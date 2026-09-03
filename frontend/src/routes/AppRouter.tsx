@@ -4,6 +4,7 @@ import { DashboardPage } from '@/pages/dashboard'
 import { JobListPage } from '@/pages/jobs/list'
 import { JobFormPage } from '@/pages/jobs/form'
 import { JobDetailsPage } from '@/pages/jobs/details'
+import { NotFoundPage } from '@/pages/not-found'
 import { ProtectedRoute } from '@/features/auth/ProtectedRoute'
 import { DashboardLayout } from '@/layouts/dashboard-layout'
 
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  { path: '*', element: <div>404 - page not found</div> },
+  { path: '*', element: <NotFoundPage /> },
 ])
 
 export function AppRouter() {

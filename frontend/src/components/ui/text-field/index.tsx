@@ -4,6 +4,7 @@ import type { TextFieldProps } from './types'
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   ({ label, error, id, name, required, startAdornment, endAdornment, ...props }, ref) => {
     const inputId = id ?? name
+    const errorId = error ? `${inputId}-error` : undefined
 
     return (
       <div className="flex flex-col gap-1">
@@ -19,6 +20,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             id={inputId}
             name={name}
             ref={ref}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={errorId}
             className={`w-full rounded-md border bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-400 ${
               startAdornment ? 'pl-9' : ''
             } ${endAdornment ? 'pr-10' : ''} ${error ? 'border-red-500' : 'border-slate-300'}`}
@@ -28,7 +31,11 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
             <div className="absolute right-2 top-1/2 -translate-y-1/2">{endAdornment}</div>
           )}
         </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && (
+          <p id={errorId} className="text-sm text-red-600">
+            {error}
+          </p>
+        )}
       </div>
     )
   },
