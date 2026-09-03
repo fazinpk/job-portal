@@ -1,4 +1,11 @@
-import { Briefcase, CheckCircle2, FileEdit, XCircle } from "lucide-react";
+import {
+  Briefcase,
+  CheckCircle2,
+  FileEdit,
+  XCircle,
+  Zap,
+  Building2,
+} from "lucide-react";
 import { StatCard } from "./components/StatCard";
 import { useDashboardController } from "./hooks";
 import { LoadingView } from "@/components/views/loading";
@@ -53,6 +60,18 @@ export function DashboardPage() {
           icon={XCircle}
           theme="error"
           onClick={() => goToJobs("CLOSED")}
+        />
+        <StatCard
+          label="Immediate joiners"
+          value={stats.immediateJoinerCount}
+          icon={Zap}
+          theme="warning"
+        />
+        <StatCard
+          label="Companies"
+          value={stats.totalCompanies}
+          icon={Building2}
+          theme="muted"
         />
       </div>
 

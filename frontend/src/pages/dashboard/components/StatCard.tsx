@@ -5,6 +5,7 @@ const THEME_CLASSES = {
   success: "bg-emerald-50 text-emerald-600",
   muted: "bg-slate-100 text-slate-600",
   error: "bg-red-50 text-red-600",
+  warning: "bg-amber-50 text-amber-600",
 } as const;
 
 interface StatCardProps {

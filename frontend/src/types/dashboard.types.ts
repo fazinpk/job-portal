@@ -5,4 +5,6 @@ export interface DashboardStats {
   totalCategories: number
   byStatus: Record<JobStatus, number>
   byCategory: { categoryId: number; count: number }[]
+  immediateJoinerCount: number
+  totalCompanies: number
 }
