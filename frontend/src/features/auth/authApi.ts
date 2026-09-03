@@ -2,10 +2,11 @@ import { baseApi } from "@/services/api/baseApi";
 import { LOGIN_URL, REFRESH_URL, LOGOUT_URL } from "@/services/api/urls.const";
 import { credentialsSet, credentialsCleared } from "./authSlice";
 import type { ApiEnvelope } from "@/types/api.types";
-import type { LoginRequest, LoginResponse } from "@/types/auth.types";
+import type { Admin, LoginRequest, LoginResponse } from "@/types/auth.types";
 
 interface RefreshResponse {
   accessToken: string;
+  admin: Admin;
 }
 
 export const authApi = baseApi.injectEndpoints({
