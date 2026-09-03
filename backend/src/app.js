@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import helmet from "helmet";
 
 import { env } from "./config/env.js";
 import { authRoutes } from "./modules/auth/auth.routes.js";
@@ -13,6 +14,8 @@ import { ApiError } from "./utils/ApiError.js";
 
 export const app = express();
 
+app.set("trust proxy", 1);
+app.use(helmet());
 app.use(cors({ origin: env.clientOrigin, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
